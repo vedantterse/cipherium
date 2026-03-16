@@ -572,6 +572,19 @@
     $("chatInput").addEventListener("keydown", e => {
       if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) analyze();
     });
+
+    window.addEventListener("message", e => {
+      if (e.data?.type !== "cipherium-screenshot") return;
+      const dataUrl = e.data.imageDataUrl;
+      if (!dataUrl) return;
+
+      switchTab("image");
+      imageDataUrl = dataUrl;
+      $("previewImg").src = dataUrl;
+      $("imagePreview").style.display = "block";
+      imgDropZone.style.display = "none";
+      analyze();
+    });
   </script>
 </body>
 </html>
