@@ -215,6 +215,11 @@ const server = Bun.serve({
   async fetch(req) {
     const url = new URL(req.url);
 
+    if (url.pathname === "/back.mp4" && req.method === "GET") {
+      const file = Bun.file(join(import.meta.dir, "back.mp4"));
+      return new Response(file);
+    }
+
     if (url.pathname === "/" && req.method === "GET") {
       return new Response(landingHtml, {
         headers: { "Content-Type": "text/html; charset=utf-8" },
